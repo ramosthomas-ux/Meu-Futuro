@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Futuro | Arquivos da Ordo Realitas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-element="sangue">
+
+  <!-- Canvas de Efeitos Paranormais Dinâmicos -->
+  <canvas id="paranormal-canvas"></canvas>
+
+  <!-- Vinheta Atmosférica -->
+  <div class="vignette-overlay"></div>
+
+  <!-- Barra Superior Interativa da Ordo Realitas -->
+  <nav class="ordo-navbar">
+    <div class="ordo-brand">
+      <span class="pulse-dot"></span>
+      <span>ORDO REALITAS // REGISTRO TEMPORAL</span>
+    </div>
+
+    <div class="element-selector" role="group" aria-label="Seletor de Elementos Paranormais">
+      <button class="elem-btn active" data-elem="sangue">SANGUE</button>
+      <button class="elem-btn" data-elem="conhecimento">CONHECIMENTO</button>
+      <button class="elem-btn" data-elem="morte">MORTE</button>
+      <button class="elem-btn" data-elem="energia">ENERGIA</button>
+    </div>
+
+    <div class="nex-control">
+      <label for="nex-slider">NEX: <strong id="nex-value">50%</strong></label>
+      <input type="range" id="nex-slider" min="5" max="99" value="50">
+    </div>
+  </nav>
+
+  <!-- Cabeçalho Ritualístico -->
+  <header class="ritual-header">
+    <!-- Sigilos SVG Dinâmicos por Elemento -->
+    <div class="sigil-container" aria-hidden="true">
+      <!-- Sigilo de Sangue -->
+      <svg class="sigil-svg sigil-sangue active" viewBox="0 0 400 400">
+        <circle cx="200" cy="200" r="185" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="12 6"/>
+        <circle cx="200" cy="200" r="155" fill="none" stroke="currentColor" stroke-width="2"/>
+        <polygon points="200,25 352,288 48,288" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="200,375 48,112 352,112" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M200,70 C235,140 270,180 270,225 A70,70 0 1,1 130,225 C130,180 165,140 200,70 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+
+      <!-- Sigilo de Conhecimento -->
+      <svg class="sigil-svg sigil-conhecimento" viewBox="0 0 400 400">
+        <circle cx="200" cy="200" r="188" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <circle cx="200" cy="200" r="165" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="85" y="85" width="230" height="230" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="85" y="85" width="230" height="230" transform="rotate(45 200 200)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <!-- Olho do Conhecimento -->
+        <path d="M95,200 Q200,115 305,200 Q200,285 95,200 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="200" cy="200" r="32" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="200" cy="200" r="10" fill="currentColor"/>
+      </svg>
+
+      <!-- Sigilo de Morte -->
+      <svg class="sigil-svg sigil-morte" viewBox="0 0 400 400">
+        <circle cx="200" cy="200" r="185" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M200,200 m0,0 a15,15 0 0,1 30,0 a30,30 0 0,1 -60,0 a45,45 0 0,1 90,0 a60,60 0 0,1 -120,0 a75,75 0 0,1 150,0 a90,90 0 0,1 -180,0 a105,105 0 0,1 210,0 a120,120 0 0,1 -240,0 a135,135 0 0,1 270,0 a150,150 0 0,1 -300,0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+
+      <!-- Sigilo de Energia -->
+      <svg class="sigil-svg sigil-energia" viewBox="0 0 400 400">
+        <polygon points="200,15 360,108 360,292 200,385 40,292 40,108" fill="none" stroke="currentColor" stroke-width="2"/>
+        <polygon points="200,55 325,200 200,345 75,200" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="15 8"/>
+        <polyline points="215,75 155,195 215,195 175,325 255,185 195,185 215,75" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      </svg>
+    </div>
+
+    <p class="ritual-subtitle" id="element-quote">
+      "O Sangue é a entidade do sentimento. Tudo começa no Sangue."
+    </p>
+    <h1 class="main-title" data-text="Meu Futuro">Meu Futuro</h1>
+    <div class="header-divider">
+      <span></span>
+      <i class="diamond"></i>
+      <span></span>
+    </div>
+    <p class="header-desc">
+      Um manifesto artístico traçado através do Outro Lado: a evolução da criação visual ao longo da próxima década.
+    </p>
+  </header>
+
+  <!-- Conteúdo Principal: As 3 Seções da Linha do Tempo -->
+  <main class="timeline-container">
+    <div class="timeline-line" aria-hidden="true"></div>
+
+    <!-- SEÇÃO 1: Daqui 1 Ano -->
+    <section class="timeline-card reveal" data-step="01">
+      <div class="card-node">
+        <span>I</span>
+      </div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="year-badge">ANO // 2027</span>
+          <span class="status-tag">O DESPERTAR DA ARTE</span>
+        </div>
+        <h2>Daqui 1 Ano</h2>
+        <p>
+          O ano de <strong>2027</strong> marcará a transição definitiva para a minha jornada criativa. Será o momento em que irei <strong>finalizar o Ensino Médio</strong> e dar o primeiro grande passo rumo ao meu propósito: <strong>ingressar na faculdade de Artes</strong>. Esse será o início da imersão acadêmica e prática no universo visual, absorvendo fundamentos, experimentando novas linguagens e transformando a paixão pelo desenho e pela expressão artística na base da minha carreira.
+        </p>
+        <div class="card-footer">
+          <span>MARCO: CONCLUSÃO DO ENSINO MÉDIO &amp; FACULDADE DE ARTES</span>
+          <span class="sigil-mark">◈</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2: Daqui 5 Anos -->
+    <section class="timeline-card reveal" data-step="02">
+      <div class="card-node">
+        <span>II</span>
+      </div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="year-badge">ANO // 2031</span>
+          <span class="status-tag">A CONSOLIDAÇÃO</span>
+        </div>
+        <h2>Daqui 5 Anos</h2>
+        <p>
+          Cinco anos à frente, estarei <strong>formado na faculdade de Artes</strong>, atuando profissionalmente e vivendo daquilo que construí. Pretendo estar trabalhando diretamente na área artística, dedicando-me à <strong>ilustração, pintura e outras expressões das artes visuais</strong>. Nesse estágio, minha identidade visual já terá forma própria, unindo técnica apurada, sensibilidade estética e projetos autorais e comerciais que conectam pessoas através da arte.
+        </p>
+        <div class="card-footer">
+          <span>MARCO: GRADUAÇÃO &amp; ATUAÇÃO EM ILUSTRAÇÃO E PINTURA</span>
+          <span class="sigil-mark">◈</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3: Daqui 10 Anos -->
+    <section class="timeline-card reveal" data-step="03">
+      <div class="card-node">
+        <span>III</span>
+      </div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="year-badge">ANO // 2036</span>
+          <span class="status-tag">TRANSCENDÊNCIA CRIATIVA</span>
+        </div>
+        <h2>Daqui 10 Anos</h2>
+        <p>
+          Em uma década, minha trajetória estará consolidada em um patamar ainda mais ambicioso. Pretendo continuar <strong>atuando intensamente na área artística</strong>, mas agora envolto em <strong>projetos grandes</strong> e de alto impacto. Estarei <strong>explorando outros tipos de artes</strong> além das mídias tradicionais, expandindo fronteiras criativas e <strong>aprimorando ainda mais minhas habilidades e técnicas artísticas</strong> para deixar uma marca duradoura no mundo visual.
+        </p>
+        <div class="card-footer">
+          <span>MARCO: GRANDES PROJETOS &amp; MAESTRIA MULTIDISCIPLINAR</span>
+          <span class="sigil-mark">◈</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="ritual-footer">
+    <p>ARQUIVO CONFIDENCIAL // MEU FUTURO NAS ARTES VISUAIS</p>
+    <p class="footer-hint">Interaja com a tela para manifestar o elemento ativo • Alterne os elementos no topo</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

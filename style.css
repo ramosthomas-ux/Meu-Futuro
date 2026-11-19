@@ -1,0 +1,365 @@
+/* ==========================================================================
+   SISTEMA DE TEMAS PARANORMAIS (VARIÁVEIS DINÂMICAS POR ELEMENTO)
+   ========================================================================== */
+:root {
+  --bg-deep: #090102;
+  --bg-surface: rgba(24, 4, 8, 0.78);
+  --bg-card-hover: rgba(42, 6, 13, 0.88);
+  --primary: #d91630;
+  --primary-bright: #ff2a47;
+  --primary-dim: #7a0918;
+  --accent: #ff6b7f;
+  --text-main: #f7e6e8;
+  --text-muted: #c99ca2;
+  --border-color: rgba(217, 22, 48, 0.38);
+  --glow-shadow: 0 0 25px rgba(217, 22, 48, 0.35);
+  --liquid-overlay: radial-gradient(circle at 50% 30%, rgba(160, 10, 30, 0.22), rgba(10, 0, 2, 0.92));
+}
+
+/* ELEMENTO: SANGUE (Vermelho & Imersão Fluida) */
+body[data-element="sangue"] {
+  --bg-deep: #0a0102;
+  --bg-surface: rgba(28, 3, 7, 0.75);
+  --bg-card-hover: rgba(48, 5, 12, 0.88);
+  --primary: #e0112b;
+  --primary-bright: #ff334b;
+  --primary-dim: #750614;
+  --accent: #ff8594;
+  --text-main: #fce8ea;
+  --text-muted: #d199a0;
+  --border-color: rgba(224, 17, 43, 0.42);
+  --glow-shadow: 0 0 28px rgba(224, 17, 43, 0.4);
+  --liquid-overlay: radial-gradient(circle at 50% 20%, rgba(185, 12, 34, 0.25), rgba(8, 0, 1, 0.92));
+}
+
+/* ELEMENTO: CONHECIMENTO (Dourado / Amarelo & Sigilos Arcanos) */
+body[data-element="conhecimento"] {
+  --bg-deep: #0a0802;
+  --bg-surface: rgba(26, 20, 5, 0.78);
+  --bg-card-hover: rgba(46, 36, 8, 0.88);
+  --primary: #eab308;
+  --primary-bright: #fde047;
+  --primary-dim: #854d0e;
+  --accent: #fef08a;
+  --text-main: #fefce8;
+  --text-muted: #d6c896;
+  --border-color: rgba(234, 179, 8, 0.42);
+  --glow-shadow: 0 0 28px rgba(234, 179, 8, 0.38);
+  --liquid-overlay: radial-gradient(circle at 50% 25%, rgba(202, 138, 4, 0.18), rgba(8, 6, 1, 0.94));
+}
+
+/* ELEMENTO: MORTE (Preto e Branco & Espirais Temporais) */
+body[data-element="morte"] {
+  --bg-deep: #050505;
+  --bg-surface: rgba(18, 18, 18, 0.82);
+  --bg-card-hover: rgba(34, 34, 34, 0.9);
+  --primary: #e5e5e5;
+  --primary-bright: #ffffff;
+  --primary-dim: #525252;
+  --accent: #a3a3a3;
+  --text-main: #ffffff;
+  --text-muted: #b5b5b5;
+  --border-color: rgba(255, 255, 255, 0.35);
+  --glow-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+  --liquid-overlay: radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.95));
+}
+
+/* ELEMENTO: ENERGIA (Roxo & Cabos Elétricos) */
+body[data-element="energia"] {
+  --bg-deep: #07020d;
+  --bg-surface: rgba(22, 8, 38, 0.78);
+  --bg-card-hover: rgba(38, 13, 66, 0.88);
+  --primary: #a855f7;
+  --primary-bright: #d8b4fe;
+  --primary-dim: #581c87;
+  --accent: #e879f9;
+  --text-main: #faf5ff;
+  --text-muted: #c9b2e0;
+  --border-color: rgba(168, 85, 247, 0.45);
+  --glow-shadow: 0 0 30px rgba(168, 85, 247, 0.45);
+  --liquid-overlay: radial-gradient(circle at 50% 25%, rgba(147, 51, 234, 0.22), rgba(5, 1, 10, 0.94));
+}
+
+/* ==========================================================================
+   RESET E BASE
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.7;
+  transition: background-color 0.7s ease, color 0.7s ease;
+}
+
+/* Canvas de Fundo */
+#paranormal-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--liquid-overlay);
+  z-index: 1;
+  pointer-events: none;
+  transition: background 0.8s ease;
+}
+
+/* ==========================================================================
+   BARRA DE CONTROLE DA ORDO REALITAS
+   ========================================================================== */
+.ordo-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 2rem;
+  background: rgba(5, 5, 5, 0.82);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  transition: border-color 0.6s ease;
+}
+
+.ordo-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--primary-bright);
+  box-shadow: 0 0 10px var(--primary-bright);
+  animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.45); opacity: 0.5; }
+}
+
+.element-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.elem-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 0.45rem 0.95rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.elem-btn:hover {
+  color: var(--text-main);
+  border-color: var(--primary-bright);
+  box-shadow: var(--glow-shadow);
+}
+
+.elem-btn.active {
+  background: var(--primary);
+  color: #050505;
+  border-color: var(--primary-bright);
+  box-shadow: var(--glow-shadow);
+}
+
+body[data-element="sangue"] .elem-btn.active,
+body[data-element="energia"] .elem-btn.active {
+  color: #ffffff;
+}
+
+.nex-control {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.nex-control strong {
+  color: var(--primary-bright);
+}
+
+input[type="range"] {
+  accent-color: var(--primary);
+  cursor: pointer;
+  width: 110px;
+}
+
+/* ==========================================================================
+   CABEÇALHO RITUALÍSTICO
+   ========================================================================== */
+.ritual-header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 5.5rem 1.5rem 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sigil-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 340px;
+  height: 340px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.24;
+  color: var(--primary-bright);
+  transition: color 0.7s ease;
+}
+
+.sigil-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.85) rotate(0deg);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.sigil-svg.active {
+  opacity: 1;
+  animation: slowSpin 38s linear infinite;
+}
+
+@keyframes slowSpin {
+  from { transform: scale(1) rotate(0deg); }
+  to { transform: scale(1) rotate(360deg); }
+}
+
+.ritual-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--primary-bright);
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 12px var(--primary-dim);
+  transition: color 0.6s ease;
+}
+
+.main-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-main);
+  text-shadow: 0 0 25px var(--primary-dim), 0 0 45px rgba(0, 0, 0, 0.9);
+  position: relative;
+  display: inline-block;
+  transition: text-shadow 0.6s ease;
+}
+
+.main-title:hover {
+  animation: ritualGlitch 0.35s steps(2, end) infinite;
+}
+
+@keyframes ritualGlitch {
+  0% { transform: translate(0); text-shadow: -2px 0 var(--primary-bright), 2px 0 var(--accent); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); text-shadow: 2px 0 var(--primary-bright), -2px 0 var(--accent); }
+  75% { transform: translate(-1px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.header-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem auto;
+  max-width: 360px;
+}
+
+.header-divider span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-bright), transparent);
+}
+
+.header-divider .diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--primary-bright);
+  transform: rotate(45deg);
+  box-shadow: 0 0 12px var(--primary-bright);
+}
+
+.header-desc {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   LINHA DO TEMPO E CARTÕES DAS 3 SEÇÕES
+   ========================================================================== */
+.timeline-container {
+  position: relative;
+  z-index: 10;
+  max-width: 960px;
+  margin: 2rem auto 5rem;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 39px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--primary), var(--primary-bright), var(--primary), transparent);
+  box-shadow: 0 0 12px var(--primary);
+}
+
+.timeline-card {
+  position: relative;
+  display: flex;
